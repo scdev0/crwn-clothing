@@ -5,12 +5,14 @@ import { Provider } from 'react-redux';
 
 import './index.css';
 import App from './App';
+import store from './redux/store';
+
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider>
+    <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
