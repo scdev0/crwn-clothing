@@ -6,10 +6,12 @@ export const selectShopCollections = createSelector([selectShop], (shop) => shop
 
 export const selectShopCollectionsForPreview = createSelector(
   [selectShopCollections],
-  (collections) => Object.values(collections)
+  (collections) => (collections ? Object.values(collections) : [])
 );
 
 // selectShopCollection returns a createSelector based on the collectionUrlParam passed in
 export const selectShopCollection = (collectionUrlParam) => {
-  return createSelector([selectShopCollections], (collections) => collections[collectionUrlParam]);
+  return createSelector([selectShopCollections], (collections) =>
+    collections ? collections[collectionUrlParam] : null
+  );
 };

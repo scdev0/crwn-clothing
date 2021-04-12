@@ -64,15 +64,17 @@ export const addCollectionAndItems = async (collectionKey, objectsToAdd) => {
  ** Convert the firestore collections to shop collections map
  */
 export const convertCollectionsSnapshotToMap = (collections) => {
-  const transformedCollection = collections.docs.map((doc) => {
+  const transformedCollections = collections.docs.map((doc) => {
     const { title, items } = doc.data();
-    return { title, items, routeName: encodeURI(title), id: doc.id };
+    return { title, items, routeName: encodeURI(title.toLowerCase()), id: doc.id };
   });
 
-  return transformedCollection.reduce((accumulator, collection) => {
+  const shopCollections = transformedCollections.reduce((accumulator, collection) => {
     accumulator[collection.title.toLowerCase()] = collection;
     return accumulator;
   }, {});
+
+  return shopCollections;
 };
 
 firebase.initializeApp(config);
