@@ -3,14 +3,9 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { fetchCollectionsStartAsync } from '../../redux/shop/shopActions';
-import { selectShopIsFetching, selectShopIsLoaded } from '../../redux/shop/shopSelectors';
 
-import CollectionsOverview from '../../components/CollectionsOverview/CollectionsOverview';
-import CollectionPage from '../CollectionPage/CollectionPage';
-import WithSpinner from '../../components/WithSpinner/WithSpinner';
-
-const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
-const CollectionsPageWithSpinner = WithSpinner(CollectionPage);
+import CollectionsOverviewContainer from '../../components/CollectionsOverview/CollectionsOverviewContainer';
+import CollectionPageContainer from '../CollectionPage/CollectionPageContainer';
 
 class ShopPage extends React.Component {
   componentDidMount() {
@@ -20,29 +15,15 @@ class ShopPage extends React.Component {
   }
 
   render() {
-    const { match, isLoaded } = this.props;
+    const { match } = this.props;
     return (
       <div className='shop-page'>
-        <Route
-          exact
-          path={`${match.path}`}
-          render={(props) => <CollectionsOverviewWithSpinner isLoading={!isLoaded} {...props} />}
-        />
-        <Route
-          path={`${match.path}/:collectionId`}
-          render={(props) => <CollectionsPageWithSpinner isLoading={!isLoaded} {...props} />}
-        />
+        <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
+        <Route path={`${match.path}/:collectionId`} component={CollectionPageContainer} />
       </div>
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    isFetching: selectShopIsFetching(state),
-    isLoaded: selectShopIsLoaded(state),
-  };
-};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -50,4 +31,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);
+export default connect(null, mapDispatchToProps)(ShopPage);
