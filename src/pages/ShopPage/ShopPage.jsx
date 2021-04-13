@@ -29,15 +29,18 @@ class ShopPage extends React.Component {
 
     // get collections data from firestore and set it in redux shop collections state
     const collectionRef = firestore.collection('collections');
-    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async (snapshot) => {
+
+    collectionRef.get().then((snapshot) => {
       const shopCollections = convertCollectionsSnapshotToMap(snapshot);
       updateCollections(shopCollections);
       this.setState({ isLoading: false });
     });
-  }
 
-  componentWillUnmount() {
-    this.unsubscribeFromSnapshot && this.unsubscribeFromSnapshot();
+    // fetch(
+    //   'https://firestore.googleapis.com/v1/projects/crwn-db-6e4ee/databases/(default)/documents/collections'
+    // )
+    //   .then((response) => response.json())
+    //   .then((collections) => console.log(collections));
   }
 
   render() {
