@@ -8,7 +8,7 @@ import CollectionPage from './CollectionPage';
 
 const mapStateToProps = (state) => {
   return {
-    isLoading: !selectShopIsLoaded,
+    isLoading: !selectShopIsLoaded(state),
   };
 };
 
